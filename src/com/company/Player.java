@@ -8,8 +8,12 @@ public class Player {
     public String name;
     public ArrayList <String> purchasedAnimals = new ArrayList<>();
 
+    public Player(String name){
+        this.name = name;
+
+    }
 
 
-
+//metod för att sälja djur
 
 }
