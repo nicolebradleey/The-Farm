@@ -5,63 +5,70 @@ import java.util.*;
 public class Game {
     Scanner input = new Scanner(System.in);
     public int rounds;    // 5-30
-    public int playerTurn; // to choose how many will be playing. 1-4
-    public ArrayList <Player> players = new ArrayList<>();
+    public ArrayList<Player> players = new ArrayList<>();
 
 
+    public Game() {
 
-//    public Game() {
-//        System.out.println("Welcome to The Farm! Please enter how many will be playing today (1-4 players) by entering your names: ");
-//        String names = input.next();
-//        newPlayer(names);
-//
-//        while (names.equals("")) {
-//            newPlayer(names);//loop continues depending on how many names are entered
-//
-//        }
-//
-//    }
+        welcomeMessage();
+        int numOfPlayers = input.nextInt() + 1;
+
+        //if (numOfPlayers > 4) {
+           // System.out.println("Please only enter up to 4 players");
+
+       // }
+
+            System.out.println("Please enter your names.");
+            for (int i = 0; i < numOfPlayers; ++i) {
+                String playerName = input.nextLine();
+                newPlayer(playerName);
+            }
+
+        chooseRounds();  //maybe create a counter of rounds?
+
+            //System.out.println(players.size()-1);    //to check amount of players is correct
+        }
 
 
 
     public void menu() {
-        Scanner input = new Scanner(System.in);
+        System.out.println("Choose and option from the menu:  \n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
+                "\nPress any other key to exit.");
         int choice = input.nextInt();
 
         switch (choice) {
-            case 1:
-                System.out.println("Purchase an animal");
-                break;
-            case 2:
-                System.out.println("Purchase food");
-                break;
-            case 3:
-                System.out.println("Feed an animal");
-                break;
-            case 4:
-                System.out.println("Mating season");
-                break;
-            case 5:
-                    System.out.println("Sell an animal");
-            default:
-                System.out.println("Are you sure you want to exit?");
+            case 1 -> System.out.println("Purchase an animal");
+
+            case 2 -> System.out.println("Purchase food");
+
+            case 3 -> System.out.println("Feed an animal");
+
+            case 4 -> System.out.println("Mating season");
+
+            case 5 -> System.out.println("Sell an animal");
+
+            default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters
 
         }
     }
+    public void welcomeMessage(){
+        System.out.println("Welcome to The Farm! Please enter how many will be playing today (1-4 players).");  //create try catch
 
-    public void newPlayer (String newPlayer){
+    }
+    public void newPlayer(String newPlayer) {
+
         players.add(new Player(newPlayer));
     }
 
-    public void chooseRounds(int rounds){
-
+    public void chooseRounds() {
+        System.out.println("How many rounds will be played today? Please choose between 5-30");    //create try catch
+        int chosenRounds = input.nextInt();
+        for(int i = 0; i < chosenRounds; i++){
+            System.out.println("\n".repeat(20));
+            menu();
+        }
 
     }
-
-
-
-
-
 
 
 }

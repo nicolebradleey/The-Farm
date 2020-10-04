@@ -8,6 +8,10 @@ public class Store {
 
 
 
+        public void sellFood(){
+
+        }
+
 
 
 }
