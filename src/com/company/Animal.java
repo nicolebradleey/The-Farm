@@ -7,6 +7,11 @@ public abstract class Animal {    //change to abstract?
     public int health = 100;
     public int price;
 
+    public Animal(String name, String gender){
+        this.name=name;
+        this.gender=gender;
+    }
+
 //    public void animalGender(){
 //        if(Math.random()>0.5) gender = "male";
 //        else {

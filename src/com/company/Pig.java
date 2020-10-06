@@ -1,8 +1,24 @@
 package com.company;
 
-public class Pig extends Animal {
+import java.util.Scanner;
 
-//    public Pig (String name, String gender, int health, int price){
-//        super(name, gender, health, price);
-//    }
+public class Pig extends Animal {
+    public static int price = 200;
+    public Pig (String name, String gender){
+        super(name, gender);
+    }
+
+    public static void createPig(Player player) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please name your pig");
+        String name1 = input.next();
+        System.out.println("Male or Female?");
+        String gender1 = input.next();
+
+        Pig pig = new Pig(name1, gender1);     //stores created cow in players arraylist
+
+        player.animals.add(pig); //stores created cow in players arraylist
+
+        player.initialMoney = player.initialMoney - price;
+    }
 }

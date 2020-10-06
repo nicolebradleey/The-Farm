@@ -5,9 +5,9 @@ import java.util.*;
 
 public class Player {
 
-    public int initialMoney = 1000;
+    public int initialMoney = 5000;
     public String name;
-    public ArrayList <String> animals;
+    public ArrayList <Animal> animals;
     //public Animal animal;
 
     public Player(String name){
@@ -16,13 +16,7 @@ public class Player {
     }
 
 
-    public void buyAnimal(){
 
-    }
-
-    public void sellAnimal(){
-
-    }
 
 
 

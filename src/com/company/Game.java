@@ -16,7 +16,7 @@ public class Game {
         var amountOfPlayers = input.nextInt();                                            //if (numOfPlayers > 4) {/System.out.println("Please only enter up to 4 players"); fix later
 
 
-        System.out.println("Please enter your names.");
+        System.out.println("Please enter your names: ");
         for (int i = 0; i < amountOfPlayers; i++) {
             String playerName = input.next();
             newPlayer(playerName);
@@ -39,15 +39,16 @@ public class Game {
 
             // Loop through each player
             for (var player : players) {
-                System.out.println("\n".repeat(50) + "Round " + currentRound + " of " + rounds + "\nIt's your turn now " + player.name);
+                System.out.println("\n".repeat(50) + "You have a balance of " + player.initialMoney + " pieces of silver.");
+                System.out.println("Round " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
 
-                System.out.println("Choose and option from the menu:  \n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
+                System.out.println("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
                         "\nPress any other key to exit.");
                 int choice = input.nextInt();
 
                 switch (choice) {
-                    case 1 -> System.out.println("Purchase an animal");
-                    case 2 -> Store.sellFood();
+                    case 1 -> Store.createAnimal(player);
+                    case 2 -> Store.createFood();
                     case 3 -> System.out.println("Feed an animal");
                     case 4 -> System.out.println("Mating season");
                     case 5 -> System.out.println("Sell an animal");
@@ -63,7 +64,7 @@ public class Game {
     }
 
     public void welcomeMessage() {
-        System.out.println("Welcome to The Farm! Please enter how many will be playing today (1-4 players).");  //create try catch
+        System.out.println("Welcome to The Farm! \n -------------------- \nPlease enter how many will be playing today (1-4 players).");  //create try catch
 
     }
 
