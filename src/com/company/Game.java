@@ -5,75 +5,89 @@ import java.util.*;
 public class Game {
     Scanner input = new Scanner(System.in);
     public int rounds;    // 5-30
+    public int currentRound = 1;
     public ArrayList<Player> players = new ArrayList<>();
+    public Player playingNow;
 
 
     public Game() {
 
         welcomeMessage();
-        int numOfPlayers = input.nextInt() + 1;
+        var amountOfPlayers = input.nextInt();                                            //if (numOfPlayers > 4) {/System.out.println("Please only enter up to 4 players"); fix later
 
-        //if (numOfPlayers > 4) {
-           // System.out.println("Please only enter up to 4 players");
 
-       // }
-
-            System.out.println("Please enter your names.");
-            for (int i = 0; i < numOfPlayers; ++i) {
-                String playerName = input.nextLine();
-                newPlayer(playerName);
-            }
-
-        chooseRounds();  //maybe create a counter of rounds?
-
-            //System.out.println(players.size()-1);    //to check amount of players is correct
+        System.out.println("Please enter your names.");
+        for (int i = 0; i < amountOfPlayers; i++) {
+            String playerName = input.next();
+            newPlayer(playerName);
         }
 
+        chooseRounds();
+
+
+        //System.out.println("HOW MANY PLAYERS " + players.size());
+        // System.out.println(players.get(0).name);
+
+
+    }
 
 
     public void menu() {
-        System.out.println("Choose and option from the menu:  \n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
-                "\nPress any other key to exit.");
-        int choice = input.nextInt();
 
-        switch (choice) {
-            case 1 -> System.out.println("Purchase an animal");
+        // Loop through all rounds
+        while (currentRound <= rounds) {
 
-            case 2 -> System.out.println("Purchase food");
+            // Loop through each player
+            for (var player : players) {
+                System.out.println("\n".repeat(50) + "Round " + currentRound + " of " + rounds + "\nIt's your turn now " + player.name);
 
-            case 3 -> System.out.println("Feed an animal");
+                System.out.println("Choose and option from the menu:  \n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
+                        "\nPress any other key to exit.");
+                int choice = input.nextInt();
 
-            case 4 -> System.out.println("Mating season");
+                switch (choice) {
+                    case 1 -> System.out.println("Purchase an animal");
+                    case 2 -> Store.sellFood();
+                    case 3 -> System.out.println("Feed an animal");
+                    case 4 -> System.out.println("Mating season");
+                    case 5 -> System.out.println("Sell an animal");
+                    default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters
 
-            case 5 -> System.out.println("Sell an animal");
+                }
 
-            default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters
+            }
+
+            currentRound++; // increase currentRound counter
 
         }
     }
-    public void welcomeMessage(){
+
+    public void welcomeMessage() {
         System.out.println("Welcome to The Farm! Please enter how many will be playing today (1-4 players).");  //create try catch
 
     }
+
     public void newPlayer(String newPlayer) {
 
         players.add(new Player(newPlayer));
     }
 
     public void chooseRounds() {
-        System.out.println("How many rounds will be played today? Please choose between 5-30");    //create try catch
-        int chosenRounds = input.nextInt();
-        for(int i = 0; i < chosenRounds; i++){
-            System.out.println("\n".repeat(20));
-            menu();
+        System.out.println("How many rounds will be played today? Please choose between 5-30");    //create try catch, kolla dialogs på bloggen
+        rounds = input.nextInt();
+        if (rounds >= 5)
+            for (int i = 0; i < rounds; i++) {
+                System.out.println("\n".repeat(20));
+                menu();
+
+            }
+        else {
+            System.out.println("Please enter between 5-30 rounds");
+            rounds = input.nextInt();
         }
 
     }
-
-
 }
-
-
 //a) Köpa max så många djur som hen har pengar till (varje typ av djur har ett fast ursprungspris, oavsett kön)
 //b) Köpa max så mycket mat som hen har pengar till (mat köps i kg och har kilopris)
 //c) Mata sina djur (vilken slags mat måste anges för varje djur man vill mata)

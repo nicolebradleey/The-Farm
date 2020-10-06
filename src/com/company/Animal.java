@@ -1,23 +1,18 @@
 package com.company;
 
-public class Animal {
+public abstract class Animal {    //change to abstract?
 
     public String name;
     public String gender;
     public int health = 100;
+    public int price;
 
-    //feed animal metod, mat metod
-    //if health = 0 animals dies   health deteriorates after each round between 10-30 percent. Randomise this
-
-//      public int healthAffected (){
-//
-//          for (int round = 0; round < 4 - 1; round++){
-//
-//          }
-//
-//
+//    public void animalGender(){
+//        if(Math.random()>0.5) gender = "male";
+//        else {
+//            gender = "female";
 //        }
-
-
+//    }
+//
 
 }
