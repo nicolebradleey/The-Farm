@@ -40,15 +40,21 @@ public class Game {
             // Loop through each player
             for (var player : players) {
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.initialMoney + " pieces of silver.");
+                if(player.animals.isEmpty()){
+                    System.out.println("At the moment you don't own any animals.");
+                }
+                else{
+                    System.out.println ("You are the owner of " + player.animals.getClass().getSimpleName() + ".");  //DISPLAYS YOU ARE OWNER OF ARRAYLIST??
+                }
                 System.out.println("Round " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
 
                 System.out.println("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
-                        "\nPress any other key to exit.");
+                        "\nPress any other key to exit.");  //figure out last bit, doesn't work atm!!!!!!
                 int choice = input.nextInt();
 
                 switch (choice) {
                     case 1 -> Store.createAnimal(player);
-                    case 2 -> Store.createFood();
+                    case 2 -> Store.createFood(player);
                     case 3 -> System.out.println("Feed an animal");
                     case 4 -> System.out.println("Mating season");
                     case 5 -> System.out.println("Sell an animal");
@@ -88,6 +94,15 @@ public class Game {
         }
 
     }
+
+    public void whatDoIOwn(Player player) {
+        for (var animal : player.animals) {
+            System.out.println(animal.getClass().getSimpleName());   // loop through array
+        }
+
+    }
+
+
 }
 //a) Köpa max så många djur som hen har pengar till (varje typ av djur har ett fast ursprungspris, oavsett kön)
 //b) Köpa max så mycket mat som hen har pengar till (mat köps i kg och har kilopris)

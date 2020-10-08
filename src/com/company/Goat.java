@@ -12,18 +12,23 @@ public class Goat extends Animal{
 
 
     public static void createGoat(Player player) {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please name your goat");
-        String name1 = input.next();
-        System.out.println("Male or Female?");
-        String gender1 = input.next();
+        if (player.initialMoney < 200) {
+            System.out.println("No goats for you!");
+            Store.createAnimal(player);
 
-        Goat goat = new Goat(name1, gender1);     //stores created cow in players arraylist
+        } else {
+            Scanner input = new Scanner(System.in);
+            System.out.println("Please name your goat");
+            String name1 = input.next();
+            System.out.println("Male or Female?");
+            String gender1 = input.next();
 
-        player.animals.add(goat); //stores created cow in players arraylist
+            Goat goat = new Goat(name1, gender1);     //stores created cow in players arraylist
 
-        player.initialMoney = player.initialMoney - price;
+            player.animals.add(goat); //stores created cow in players arraylist
+
+            player.initialMoney = player.initialMoney - price;
+        }
+
     }
-
-
 }

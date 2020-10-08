@@ -12,6 +12,12 @@ public abstract class Animal {    //change to abstract?
         this.gender=gender;
     }
 
+    public void healthDeterioration(int health) {
+
+
+    }
+
+
 //    public void animalGender(){
 //        if(Math.random()>0.5) gender = "male";
 //        else {

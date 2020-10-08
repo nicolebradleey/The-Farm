@@ -11,15 +11,17 @@ public class Store {
 
 
 
-        public static void createFood(){
+        public static void createFood(Player player){
 
-                System.out.println("We have hay, grain and pellets. Please choose one");
-                String choice = input.next();
+                System.out.println("Which kind of food will you be purchasing today? \n1.Hay \n2.Grain \n.Pellets.");
+                int choice = input.nextInt();
 
                 switch (choice){
-                        case "hay" -> System.out.println("Hay á 10 pieces of silver per kilo, how many kilos would you like?");
-                        case "grain" -> System.out.println("Grain á 20 pieces of silver per kilo, how many kilos would you like?");
-                        case "pellets" -> System.out.println("Pellets á 30 pieces of silver per kilo, how many kilos would you like?");
+                        case 1 -> Hay.getPriceHay(player);
+
+                        case 2 -> System.out.println("Grain á 20 pieces of silver per kilo, how many kilos would you like?");
+
+                        case 3 -> System.out.println("Pellets á 30 pieces of silver per kilo, how many kilos would you like?");
                 }
 
         }
