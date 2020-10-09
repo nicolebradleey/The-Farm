@@ -1,28 +1,39 @@
 package com.company;
+
 import java.util.*;
 
 public class Hay extends Food {
 
     public static int pricePerKilo = 10;
+    private static int choice;
 
-    public Hay(String type, int pricePerKilo){
 
-        super(type, pricePerKilo);
-    }
-
-    public static Food getPriceHay(Player player){
+    public static void getPriceHay(Player player) {
+        boolean afford = true;
         Scanner input = new Scanner(System.in);
-        System.out.println("Hay á 10 pieces of silver per kilo, how many kilos would you like?");
-        int choice = input.nextInt();
-        int finalPrice = pricePerKilo * choice;
-        System.out.println("That's a total of " + finalPrice);
+        while (afford) {
+            Food.howManyKilos();
+            int choice = input.nextInt();
+            int finalPrice = pricePerKilo * choice;
+
+            if (finalPrice > player.initialMoney) {
+                System.out.println("You can't afford this many kilos\n");
+                Dialogs.sleep(1000);
 
 
+            } else {
+                Dialogs.sleep(1000);
+                System.out.println("That's a total of " + finalPrice + " silver pieces");
+                player.hay.kilo += choice;
+                player.initialMoney = player.initialMoney - finalPrice;
+                afford = false;
+            }
+        }
 
-        return null;
+
+        //System.out.println(player.hay.kilo);
+
+
     }
-
-
-
 
 }

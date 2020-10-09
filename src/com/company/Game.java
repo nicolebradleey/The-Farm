@@ -12,9 +12,8 @@ public class Game {
 
     public Game() {
 
-        welcomeMessage();
-        var amountOfPlayers = input.nextInt();                                            //if (numOfPlayers > 4) {/System.out.println("Please only enter up to 4 players"); fix later
-
+        System.out.println("Welcome to The Farm! \n -------------------- \nPlease enter how many will be playing today (1-4 players).");
+        var amountOfPlayers = input.nextInt();
 
         System.out.println("Please enter your names: ");
         for (int i = 0; i < amountOfPlayers; i++) {
@@ -31,26 +30,22 @@ public class Game {
 
     }
 
-
     public void menu() {
-
+        int choice = 0;
         // Loop through all rounds
         while (currentRound <= rounds) {
 
             // Loop through each player
             for (var player : players) {
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.initialMoney + " pieces of silver.");
-                if(player.animals.isEmpty()){
+                if (player.animals.isEmpty()) {
                     System.out.println("At the moment you don't own any animals.");
-                }
-                else{
-                    System.out.println ("You are the owner of " + player.animals.getClass().getSimpleName() + ".");  //DISPLAYS YOU ARE OWNER OF ARRAYLIST??
+                } else {
+                    System.out.println("You are the owner of " + player.animals.getClass().getSimpleName() + ".");  //DISPLAYS YOU ARE OWNER OF ARRAYLIST??
                 }
                 System.out.println("Round " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
 
-                System.out.println("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal " +
-                        "\nPress any other key to exit.");  //figure out last bit, doesn't work atm!!!!!!
-                int choice = input.nextInt();
+                choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal ", 1, 5);
 
                 switch (choice) {
                     case 1 -> Store.createAnimal(player);
@@ -69,10 +64,6 @@ public class Game {
         }
     }
 
-    public void welcomeMessage() {
-        System.out.println("Welcome to The Farm! \n -------------------- \nPlease enter how many will be playing today (1-4 players).");  //create try catch
-
-    }
 
     public void newPlayer(String newPlayer) {
 
@@ -80,19 +71,14 @@ public class Game {
     }
 
     public void chooseRounds() {
-        System.out.println("How many rounds will be played today? Please choose between 5-30");    //create try catch, kolla dialogs på bloggen
-        rounds = input.nextInt();
-        if (rounds >= 5)
-            for (int i = 0; i < rounds; i++) {
-                System.out.println("\n".repeat(20));
-                menu();
 
-            }
-        else {
-            System.out.println("Please enter between 5-30 rounds");
-            rounds = input.nextInt();
+        rounds = Dialogs.promptInt("How many rounds will be played today? Please choose between 5-30", 5, 30);
+        for (int i = 0; i < rounds; i++) {
+            System.out.println("\n".repeat(20));
+            menu();
+
+
         }
-
     }
 
     public void whatDoIOwn(Player player) {
