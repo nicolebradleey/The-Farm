@@ -36,11 +36,11 @@ public class Store {
                 "\n3.Goose á 150 pieces of silver" + " \n4.Goat á 200 pieces of silver. \n5.Donkey á 100 pieces of silver", 1, 5);
 
         switch (choice) {
-            case 1 -> Cow.createCow(player);
-            case 2 -> Pig.createPig(player);
-            case 3 -> Goose.createGoose(player);
-            case 4 -> Goat.createGoat(player);
-            case 5 -> Donkey.createDonkey(player);
+            case 1 -> Cow.createAnimal(player, 300, "Cow");
+            case 2 -> Pig.createAnimal(player, 250, "Pig");
+            case 3 -> Goose.createAnimal(player, 150, "Goose" );
+            case 4 -> Goat.createAnimal(player, 200, "Goat");
+            case 5 -> Donkey.createAnimal(player, 100,  "Donkey");
         }
 
     }

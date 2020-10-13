@@ -38,6 +38,7 @@ public class Game {
             // Loop through each player
             for (var player : players) {
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.initialMoney + " pieces of silver.");
+                player.healthDeterioration();
                 player.showMyDetails();
 
                 System.out.println("Round " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");

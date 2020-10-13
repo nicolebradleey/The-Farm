@@ -21,11 +21,11 @@ public class Player {
     }
 
     public void showMyDetails() {
-        System.out.println("You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets." +
-                "You own the following animals " + animals.size()); //change to display class of animal
+        System.out.println("You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.");
 
         for (var animal : animals) {
-            System.out.println("The name of your animal is " + animal.name + "and it's a "+ animal.getClass().getSimpleName() + " and it's " + animal.gender);
+            System.out.println("You own " + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName() + ". " +
+                   animal.name +"'s health is at: " + animal.health + "%");
         }
     }
 
@@ -37,7 +37,6 @@ public class Player {
 
         if (animalType == 1 || animalType == 2 || animalType == 3) {
             int choice = Dialogs.promptInt("How many kilos of hay will you be needing today? You currently have " + this.hay.kilo + " kilos left.", 0, 10000);
-
             this.hay.kilo = this.hay.kilo - choice;
 
         } else if (animalType == 4) {
@@ -52,11 +51,16 @@ public class Player {
 
     }
 
+    public void healthDeterioration() {
+        Random random = new Random();
+        int percent = random.nextInt(30)+10;
 
-    public void mateAnimals() {
+        for (var animal : this.animals) {
+            animal.health -= percent;      // animal.health = animal.health - percent;
+        }
 
 
     }
-
+ public void mateAnimals(){}
 
 }
