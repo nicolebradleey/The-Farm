@@ -20,7 +20,6 @@ public class Hay extends Food {
                 System.out.println("You can't afford this many kilos\n");
                 Dialogs.sleep(1000);
 
-
             } else {
                 Dialogs.sleep(1000);
                 System.out.println("That's a total of " + finalPrice + " silver pieces");
@@ -31,7 +30,7 @@ public class Hay extends Food {
         }
 
 
-        //System.out.println(player.hay.kilo);
+
 
 
     }

@@ -14,7 +14,7 @@ public class Cow extends Animal {
 
 
         if (player.initialMoney < 300) {
-            System.out.println("You can't afford a cow, you peasant!");
+            System.out.println("You can't afford a cow, you peasant!");    //maybe create randomiser class in animals for this as in werewolf.
             Store.createAnimal(player);
 
         } else {
