@@ -1,6 +1,5 @@
 package com.company;
 
-
 import java.util.*;
 
 public class Player {
@@ -11,7 +10,6 @@ public class Player {
     public Hay hay = new Hay();
     public Grain grain = new Grain();
     public Pellets pellets = new Pellets();
-    public String showMyDetails;
 
 
     public Player(String name) {
@@ -25,42 +23,60 @@ public class Player {
 
         for (var animal : animals) {
             System.out.println("You own " + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName() + ". " +
-                   animal.name +"'s health is at: " + animal.health + "%");
+                    animal.name + "'s health is at: " + animal.health + "%");
         }
     }
 
 
     public void feedAnimal() {
         Scanner input = new Scanner(System.in);
+        int list = 0;
+        System.out.println("You own the below animals: ");
+        for (var animal : animals) {
+            list++;
+            System.out.println(list + ". " + animal.name + " the " + animal.getClass().getSimpleName() + ".");   //prints list of animals with a number in front.
+        }
 
-        int animalType = Dialogs.promptInt("What would you like to feed today? \n.1.Cow. \n2.Goat. \n3.Donkey. \n4.Pig. \n5.Goose ", 1, 5);
+        int number = Dialogs.promptInt("\nWhich animal would you like to feed? Enter a number", 1, animals.size());
 
-        if (animalType == 1 || animalType == 2 || animalType == 3) {
+        String animalType = this.animals.get(number - 1).getClass().getSimpleName().toLowerCase();
+
+        if (animalType.equals("cow") || animalType.equals("goat") || animalType.equals("donkey")) {
             int choice = Dialogs.promptInt("How many kilos of hay will you be needing today? You currently have " + this.hay.kilo + " kilos left.", 0, 10000);
             this.hay.kilo = this.hay.kilo - choice;
 
-        } else if (animalType == 4) {
+        } else if (animalType.equals("pig")) {
             int choice = Dialogs.promptInt("How many kilos of pellets will you be feeding your pig? You currently have " + this.pellets.kilo + " kilos left.", 0, 10000);
-
             this.pellets.kilo = this.pellets.kilo - choice;
-        } else {
+
+        } else {      //goose
             int choice = Dialogs.promptInt("You have " + this.grain.kilo + " kilos of grain left, how many kilos will you need for your goose?", 0, 10000);
             this.grain.kilo = this.grain.kilo - choice;
         }
-
 
     }
 
     public void healthDeterioration() {
         Random random = new Random();
-        int percent = random.nextInt(30)+10;
+        int percent = random.nextInt(30) + 10;
+        ArrayList <Animal> deadAnimals = new ArrayList<>();
 
         for (var animal : this.animals) {
             animal.health -= percent;      // animal.health = animal.health - percent;
-        }
+            if(animal.health <= 0){
+                System.out.println(animal.name + " has passed away due to negligence.");
+                deadAnimals.add(animal);
+            }
+         }animals.removeAll(deadAnimals);
+    }
+
+    public void healthImprovement() {
 
 
     }
- public void mateAnimals(){}
+
+    public void mateAnimals() {
+    }
 
 }
+//Om man matar ett djur stiger dess hälsovärde - varje kg mat förbättrar djurets hälsa med 10 procent.
