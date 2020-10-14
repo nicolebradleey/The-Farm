@@ -7,9 +7,9 @@ public class Player {
     public int initialMoney = 2000;
     public String name;
     public ArrayList<Animal> animals;
-    public Hay hay = new Hay();
-    public Grain grain = new Grain();
-    public Pellets pellets = new Pellets();
+    public Hay hay = new Hay("hay",10);
+    public Grain grain = new Grain("grain",20);
+    public Pellets pellets = new Pellets("pellets",30);
 
 
     public Player(String name) {
@@ -29,6 +29,13 @@ public class Player {
 
 
     public void feedAnimal() {
+        if(animals.isEmpty() || initialMoney == 0){
+            System.out.println("Make another choice!");
+            Dialogs.sleep(1000); //fedanimal +1
+
+        }
+
+                                                                      // if inte har djur eller pengar så break och gå tillbaka till meny
         Scanner input = new Scanner(System.in);
         int list = 0;
         System.out.println("You own the below animals: ");
@@ -40,18 +47,37 @@ public class Player {
         int number = Dialogs.promptInt("\nWhich animal would you like to feed? Enter a number", 1, animals.size());
 
         String animalType = this.animals.get(number - 1).getClass().getSimpleName().toLowerCase();
+        Animal animalToFeed = this.animals.get(number - 1);
+
 
         if (animalType.equals("cow") || animalType.equals("goat") || animalType.equals("donkey")) {
             int choice = Dialogs.promptInt("How many kilos of hay will you be needing today? You currently have " + this.hay.kilo + " kilos left.", 0, 10000);
             this.hay.kilo = this.hay.kilo - choice;
-
+            if (animalToFeed.health < 100) {    //makes it impossible for health to go above 100
+                animalToFeed.health += (10 * choice);
+            }
+            if (animalToFeed.health >= 100) {
+                animalToFeed.health = 100;
+            }
         } else if (animalType.equals("pig")) {
             int choice = Dialogs.promptInt("How many kilos of pellets will you be feeding your pig? You currently have " + this.pellets.kilo + " kilos left.", 0, 10000);
             this.pellets.kilo = this.pellets.kilo - choice;
+            if (animalToFeed.health < 100) {
+                animalToFeed.health += (10 * choice);
+            }
+            if (animalToFeed.health >= 100) {
+                animalToFeed.health = 100;
+            }
 
         } else {      //goose
             int choice = Dialogs.promptInt("You have " + this.grain.kilo + " kilos of grain left, how many kilos will you need for your goose?", 0, 10000);
             this.grain.kilo = this.grain.kilo - choice;
+            if (animalToFeed.health < 100) {
+                animalToFeed.health += (10 * choice);
+            }
+            if (animalToFeed.health >= 100) {
+                animalToFeed.health = 100;
+            }
         }
 
     }
@@ -59,19 +85,19 @@ public class Player {
     public void healthDeterioration() {
         Random random = new Random();
         int percent = random.nextInt(30) + 10;
-        ArrayList <Animal> deadAnimals = new ArrayList<>();
+        ArrayList<Animal> deadAnimals = new ArrayList<>();
 
         for (var animal : this.animals) {
             animal.health -= percent;      // animal.health = animal.health - percent;
-            if(animal.health <= 0){
+            if (animal.health <= 0) {
                 System.out.println(animal.name + " has passed away due to negligence.");
                 deadAnimals.add(animal);
             }
-         }animals.removeAll(deadAnimals);
+        }
+        animals.removeAll(deadAnimals);
     }
 
     public void healthImprovement() {
-
 
     }
 

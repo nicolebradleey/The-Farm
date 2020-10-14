@@ -42,13 +42,15 @@ public class Game {
                 player.showMyDetails();
 
                 System.out.println("Round " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
-                Dialogs.sleep(1000);
+                Dialogs.sleep(500);
+                //create loop with boolean preferably counter or something that makes sure an action has been made do while - fedanimal = 0.
                 choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal ", 1, 5);
 
                 switch (choice) {
                     case 1 -> Store.createAnimal(player);
                     case 2 -> Store.createFood(player);
                     case 3 -> player.feedAnimal();
+
                     case 4 -> System.out.println("Mating season");
                     case 5 -> System.out.println("Sell an animal");
                     default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters

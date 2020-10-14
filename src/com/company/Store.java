@@ -12,21 +12,13 @@ public class Store {
 
     public static void createFood(Player player) {
         int choice;
-        choice = Dialogs.promptInt("Which kind of food will you be purchasing today? \n1.Hay \n2.Grain \n3.Pellets.", 1, 5);
+        choice = Dialogs.promptInt("Which kind of food will you be purchasing today? \n1.Hay á 10 pieces of silver per kilo" +
+                " \n2.Grain á 20 pieces of silver per kilo \n3.Pellets á 30 pieces of silver per kilo.", 1, 3);
 
         switch (choice) {
-            case 1 -> {
-                System.out.println("Hay á 10 pieces of silver per kilo.");
-                Hay.getPriceHay(player);
-            }
-            case 2 -> {
-                System.out.println("Grain á 20 pieces of silver per kilo");
-                Grain.getPriceGrain(player);
-            }
-            case 3 -> {
-                System.out.println("Pellets á 30 pieces of silver per kilo");
-                Pellets.getPricePellets(player);
-            }
+            case 1 -> Hay.getPriceFood(player,10,"hay");
+            case 2 -> Grain.getPriceFood(player,20,"grain");
+            case 3 ->Pellets.getPriceFood(player,30,"pellets");
         }
     }
 

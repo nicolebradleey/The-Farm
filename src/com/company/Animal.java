@@ -14,10 +14,6 @@ public abstract class Animal {    //change to abstract?
         this.gender = gender;
     }
 
-
-
-
-
     public static void createAnimal(Player player, int price, String className) {
 
         if (player.initialMoney < price) {
