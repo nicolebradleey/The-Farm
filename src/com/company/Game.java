@@ -7,7 +7,9 @@ public class Game {
     public int rounds;    // 5-30
     public int currentRound = 1;
     public ArrayList<Player> players = new ArrayList<>();
-    public Player playingNow;
+    static public int actionCounter = 0;
+    public Animal animal;
+
 
 
     public Game() {
@@ -23,11 +25,6 @@ public class Game {
 
         chooseRounds();
 
-
-        //System.out.println("HOW MANY PLAYERS " + players.size());
-        // System.out.println(players.get(0).name);
-
-
     }
 
     public void menu() {
@@ -37,33 +34,34 @@ public class Game {
 
             // Loop through each player
             for (var player : players) {
-                System.out.println("\n".repeat(50) + "You have a balance of " + player.initialMoney + " pieces of silver.");
+                System.out.println("\n".repeat(50) + "You have a balance of " + player.money + " pieces of silver.");
                 player.healthDeterioration();
                 player.showMyDetails();
 
-                System.out.println("Round " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
+                System.out.println("\nRound " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
                 Dialogs.sleep(500);
+
                 //create loop with boolean preferably counter or something that makes sure an action has been made do while - fedanimal = 0.
-                choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal ", 1, 5);
 
-                switch (choice) {
-                    case 1 -> Store.createAnimal(player);
-                    case 2 -> Store.createFood(player);
-                    case 3 -> player.feedAnimal();
 
-                    case 4 -> System.out.println("Mating season");
-                    case 5 -> System.out.println("Sell an animal");
-                    default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters
+                actionCounter = 0;
+                while (actionCounter == 0) {
+                    choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal ", 1, 5);
 
+                    switch (choice) {
+                        case 1 -> Store.buyAnimal(player);
+                        case 2 -> Store.buyFood(player);
+                        case 3 -> player.feedAnimal();
+                        case 4 -> Animal.mateAnimals(player);
+                        case 5 -> player.sellAnimal();
+                        default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters
+
+                    }
                 }
-
             }
-
             currentRound++; // increase currentRound counter
-
         }
     }
-
 
     public void newPlayer(String newPlayer) {
 

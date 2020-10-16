@@ -10,22 +10,23 @@ public class Store {
     public Food food;
 
 
-    public static void createFood(Player player) {
+    public static void buyFood(Player player) {
         int choice;
         choice = Dialogs.promptInt("Which kind of food will you be purchasing today? \n1.Hay á 10 pieces of silver per kilo" +
                 " \n2.Grain á 20 pieces of silver per kilo \n3.Pellets á 30 pieces of silver per kilo.", 1, 3);
 
         switch (choice) {
-            case 1 -> Hay.getPriceFood(player,10,"hay");
-            case 2 -> Grain.getPriceFood(player,20,"grain");
-            case 3 ->Pellets.getPriceFood(player,30,"pellets");
+            case 1 -> Hay.createFood(player,10,"hay");
+            case 2 -> Grain.createFood(player,20,"grain");
+            case 3 ->Pellets.createFood(player,30,"pellets");
         }
     }
 
-    public static void createAnimal(Player player) {
+    public static void buyAnimal(Player player) {
         int choice;
-        choice = Dialogs.promptInt("Which animal would you like to purchase today? \n1.Cow á 300 pieces of silver. \n2.Pig á 250 pieces of silver.  " +
-                "\n3.Goose á 150 pieces of silver" + " \n4.Goat á 200 pieces of silver. \n5.Donkey á 100 pieces of silver", 1, 5);
+        choice = Dialogs.promptInt("Which animal would you like to purchase today? \n1.Cow á 300 pieces of silver." +
+                " \n2.Pig á 250 pieces of silver.  \n3.Goose á 150 pieces of silver" + " " +
+                "\n4.Goat á 200 pieces of silver. \n5.Donkey á 100 pieces of silver", 1, 5);
 
         switch (choice) {
             case 1 -> Cow.createAnimal(player, 300, "Cow");
@@ -37,9 +38,25 @@ public class Store {
 
     }
 
-    public void sellAnimal() {
+//    public void sellAnimal(Player player) {
+//
+//
+//        ArrayList<Animal> soldAnimals = new ArrayList<>();
+//
+//        System.out.println("Pick an animal from your list of animals, to sell: ");
+//        Player.listOfAnimalsOwned
+//
+//        for (var animal : player.animals) {
+//            animal.health -= percent;      // animal.health = animal.health - percent;
+//            if (animal.health <= 0) {
+//                System.out.println(animal.name + " has passed away due to negligence.");
+//                soldAnimals.add(animal);
+//            }
+//        }
+//        animals.removeAll(deadAnimals);
+//    }
+//    }
 
-    }
 
 
 }

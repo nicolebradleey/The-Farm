@@ -4,12 +4,13 @@ import java.util.*;
 
 public class Player {
 
-    public int initialMoney = 2000;
+    public int money = 2000;
     public String name;
     public ArrayList<Animal> animals;
-    public Hay hay = new Hay("hay",10);
-    public Grain grain = new Grain("grain",20);
-    public Pellets pellets = new Pellets("pellets",30);
+    public Hay hay = new Hay("hay", 10);
+    public Grain grain = new Grain("grain", 20);
+    public Pellets pellets = new Pellets("pellets", 30);
+
 
 
     public Player(String name) {
@@ -20,29 +21,26 @@ public class Player {
 
     public void showMyDetails() {
         System.out.println("You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.");
-
-        for (var animal : animals) {
-            System.out.println("You own " + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName() + ". " +
-                    animal.name + "'s health is at: " + animal.health + "%");
+        if (animals.isEmpty()) {
+            System.out.println("You don't own any animals...");
+        } else {
+            for (var animal : animals) {
+                System.out.println("*"+animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName().toLowerCase() + "'s health is at: " +
+                         + animal.health + "%");
+            }
         }
     }
 
 
     public void feedAnimal() {
-        if(animals.isEmpty() || initialMoney == 0){
-            System.out.println("Make another choice!");
+
+        if (animals.isEmpty()) {
+            System.out.println("You don't have any animals to feed!");
             Dialogs.sleep(1000); //fedanimal +1
+            return;
 
         }
-
-                                                                      // if inte har djur eller pengar så break och gå tillbaka till meny
-        Scanner input = new Scanner(System.in);
-        int list = 0;
-        System.out.println("You own the below animals: ");
-        for (var animal : animals) {
-            list++;
-            System.out.println(list + ". " + animal.name + " the " + animal.getClass().getSimpleName() + ".");   //prints list of animals with a number in front.
-        }
+        listOfAnimalsOwned();
 
         int number = Dialogs.promptInt("\nWhich animal would you like to feed? Enter a number", 1, animals.size());
 
@@ -51,8 +49,14 @@ public class Player {
 
 
         if (animalType.equals("cow") || animalType.equals("goat") || animalType.equals("donkey")) {
-            int choice = Dialogs.promptInt("How many kilos of hay will you be needing today? You currently have " + this.hay.kilo + " kilos left.", 0, 10000);
+
+            int choice = Dialogs.promptInt("How many kilos of hay will you be needing today? You currently have " + this.hay.kilo + " kilos left." +
+                    "\n(0 to go back)", 0, this.hay.kilo);
+            if (choice == 0) {
+                return;
+            }
             this.hay.kilo = this.hay.kilo - choice;
+            Game.actionCounter++;
             if (animalToFeed.health < 100) {    //makes it impossible for health to go above 100
                 animalToFeed.health += (10 * choice);
             }
@@ -60,8 +64,13 @@ public class Player {
                 animalToFeed.health = 100;
             }
         } else if (animalType.equals("pig")) {
-            int choice = Dialogs.promptInt("How many kilos of pellets will you be feeding your pig? You currently have " + this.pellets.kilo + " kilos left.", 0, 10000);
+            int choice = Dialogs.promptInt("How many kilos of pellets will you be feeding your pig? You currently have "
+                    + this.pellets.kilo + " kilos left." + "\n(0 to go back)", 0, this.pellets.kilo);
+            if (choice == 0) {
+                return;
+            }
             this.pellets.kilo = this.pellets.kilo - choice;
+            Game.actionCounter++;
             if (animalToFeed.health < 100) {
                 animalToFeed.health += (10 * choice);
             }
@@ -70,8 +79,13 @@ public class Player {
             }
 
         } else {      //goose
-            int choice = Dialogs.promptInt("You have " + this.grain.kilo + " kilos of grain left, how many kilos will you need for your goose?", 0, 10000);
+            int choice = Dialogs.promptInt("You have " + this.grain.kilo + " kilos of grain left, how many kilos will you need for your goose?" +
+                    " \n(0 to go back)", 0, this.grain.kilo);
+            if (choice == 0) {
+                return;
+            }
             this.grain.kilo = this.grain.kilo - choice;
+            Game.actionCounter++;
             if (animalToFeed.health < 100) {
                 animalToFeed.health += (10 * choice);
             }
@@ -97,12 +111,38 @@ public class Player {
         animals.removeAll(deadAnimals);
     }
 
-    public void healthImprovement() {
 
+    public void listOfAnimalsOwned() {
+
+        Scanner input = new Scanner(System.in);
+        int list = 0;
+        System.out.println("You own the below animals: ");
+        for (var animal : animals) {
+            list++;
+            System.out.println(list + ". " + animal.name + " the " + animal.getClass().getSimpleName() + ". " + animal.gender + ".");   //prints list of animals with a number in front.
+        }
     }
 
-    public void mateAnimals() {
-    }
+    public void sellAnimal() {
 
+        ArrayList<Animal> soldAnimals = new ArrayList<>();
+
+        listOfAnimalsOwned();
+        int number = Dialogs.promptInt("\nWhich animal would you like to sell? Enter a number", 1, animals.size());
+
+        String animalType = this.animals.get(number - 1).getClass().getSimpleName().toLowerCase();
+        Animal animalToFeed = this.animals.get(number - 1);   //-1 gets index of selected animal
+
+
+        money += animalToFeed.price * animalToFeed.health;
+
+
+        System.out.print(money);
+        soldAnimals.add(animalToFeed);
+
+        animals.removeAll(soldAnimals);
+        Game.actionCounter++;
+    }
 }
-//Om man matar ett djur stiger dess hälsovärde - varje kg mat förbättrar djurets hälsa med 10 procent.
+
+
