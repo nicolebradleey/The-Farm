@@ -38,25 +38,6 @@ public class Store {
 
     }
 
-//    public void sellAnimal(Player player) {
-//
-//
-//        ArrayList<Animal> soldAnimals = new ArrayList<>();
-//
-//        System.out.println("Pick an animal from your list of animals, to sell: ");
-//        Player.listOfAnimalsOwned
-//
-//        for (var animal : player.animals) {
-//            animal.health -= percent;      // animal.health = animal.health - percent;
-//            if (animal.health <= 0) {
-//                System.out.println(animal.name + " has passed away due to negligence.");
-//                soldAnimals.add(animal);
-//            }
-//        }
-//        animals.removeAll(deadAnimals);
-//    }
-//    }
-
 
 
 }

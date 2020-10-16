@@ -131,14 +131,14 @@ public class Player {
         int number = Dialogs.promptInt("\nWhich animal would you like to sell? Enter a number", 1, animals.size());
 
         String animalType = this.animals.get(number - 1).getClass().getSimpleName().toLowerCase();
-        Animal animalToFeed = this.animals.get(number - 1);   //-1 gets index of selected animal
+        Animal animalToSell = this.animals.get(number - 1);   //-1 gets index of selected animal
 
-
-        money += animalToFeed.price * animalToFeed.health;
-
+        double animalHealth = ((double) animalToSell.health / 100);
+        money += animalToSell.price * animalHealth;     //MAKE MATH ROUND TO A AVRUNDA ISTÄLLET FÖR KAPA AV
+        System.out.println(animalToSell.price + "SELL PRICE");
 
         System.out.print(money);
-        soldAnimals.add(animalToFeed);
+        soldAnimals.add(animalToSell);
 
         animals.removeAll(soldAnimals);
         Game.actionCounter++;
