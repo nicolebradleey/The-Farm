@@ -22,11 +22,8 @@ public abstract class Animal {    //change to abstract?
             Store.buyAnimal(player);
         } else {
             Scanner input = new Scanner(System.in);
-            System.out.println("Please name your " + className.toLowerCase() + "?");
-            String name = input.next();
-
-            System.out.println("Is " + name + " a Male or a Female " + className.toLowerCase() + "?");    //DIALOGS PROMPT STRING LIKE IN MATEANIMALS BABYNAME
-            String gender = input.next();
+            String name = Dialogs.prompt("Please name your " + className.toLowerCase() + "?");
+            String gender  = Dialogs.prompt("Is " + name + " a Male or a Female " + className.toLowerCase() + "?");   //make sure female or male is entered
 
             switch (className) {
                 case "Pig" -> player.animals.add(new Pig(name, gender));
@@ -35,22 +32,31 @@ public abstract class Animal {    //change to abstract?
                 case "Goose" -> player.animals.add(new Goose(name, gender));
                 case "Donkey" -> player.animals.add(new Donkey(name, gender));
             }
-            System.out.println("Would you like to buy another animal? ");
             Game.actionCounter++;
-            player.money = player.money - price;      //make a loop to buy more animals . Ask if they want to buy more animals yes or no 1/2. Yes call method again, no = go back to menu.
+            player.money = player.money - price;
+            int choice = Dialogs.promptInt("You have " + player.money + " pieces of silver left. " +
+                    "Would you like to buy another animal? 1 for yes 2 for no ",1,2);
+            if(choice == 1){
+                Store.buyAnimal(player);
+            }
         }
     }
 
     public static void mateAnimals(Player player) { //behöver inte ha gender för finns i fields
 
 
-        player.listOfAnimalsOwned();
-        int number1 = Dialogs.promptInt("\nPick animal one: ", 1, player.animals.size());    //IF ONLY ONE ANIMAL IS OWNED GO BACK TO MENU
+        player.listOfAnimalsOwned();                 //WHEN YOU DONT HAVE TWO ANIMALS OF SAME TYPE, BREAK!!
+
+        if(player.animals.size() <= 1){
+            System.out.println("\nIn case it wasn't obvious, you need more than one animal to create another...");
+            return;
+        }
+
+        int number1 = Dialogs.promptInt("\nPick animal one: ", 1, player.animals.size());
 
         String animalType1 = player.animals.get(number1 - 1).getClass().getSimpleName().toLowerCase();  //returns whats on place number1 as a string
        Animal animal1 = player.animals.get(number1 - 1);
 
-        System.out.println("animal 1 " + animalType1);
 
        boolean wrongAnimal = false;
 
@@ -60,7 +66,6 @@ public abstract class Animal {    //change to abstract?
         String animalType2 = player.animals.get(number2 - 1).getClass().getSimpleName().toLowerCase();
         Animal animal2 = player.animals.get(number2-1);
 
-            System.out.println("animal 2 " + animalType2);
 
         if (animal1.gender.equals(animal2.gender)) {
             System.out.println("You can't mate two animals of the same sex, choose another animal.");
@@ -78,13 +83,28 @@ public abstract class Animal {    //change to abstract?
 
 
         if(Math.random() > 0.5){
-            System.out.println("Better luck next time!");
+            System.out.println("Better luck next time...");
+            Dialogs.sleep(1000);
             Game.actionCounter ++;
             return;
         }
 
-        String name = Dialogs.prompt("Please enter a name: "); //CHANGE ORDER SO SEX IS KNOWN BEFORE NAMING ANIMAL!!!
-        String gender1 = Math.random() > 0.5 ? "male" : "female";
+
+        if(animalType1.equals("cow")){
+
+
+        }
+
+
+
+        String gender1 = Math.random() > 0.5 ? "male" : "female"; //OLIKA DJUR KAN HA OLIKA MÅNGA BARN!!
+
+
+        String name = Dialogs.prompt("It's a " + player.animals.get(player.animals.size()-1).gender  +
+                 " " + player.animals.get(player.animals.size()-1).getClass().getSimpleName() + "!!!" +
+                "\nPlease enter a name for your baby " + animalType1 + ": ");
+
+                                                                                                                  //OLIKA DJUR KAN HA OLIKA MÅNGA BARN!!
 
         switch (animalType1) {
             case "pig" -> player.animals.add(new Pig(name, gender1));
@@ -93,8 +113,8 @@ public abstract class Animal {    //change to abstract?
             case "goose" -> player.animals.add(new Goose(name, gender1));
             case "donkey" -> player.animals.add(new Donkey(name, gender1));
         }
-        System.out.println("It's a " + player.animals.get(player.animals.size()-1).gender +
-                " " + player.animals.get(player.animals.size()-1).getClass().getSimpleName() + "!!!");
+
+        Game.actionCounter ++;
 
 
     }

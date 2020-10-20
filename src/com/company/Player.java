@@ -4,13 +4,12 @@ import java.util.*;
 
 public class Player {
 
-    public int money = 2000;
+    public int money = 200; //SÄTT TILL 2000
     public String name;
     public ArrayList<Animal> animals;
     public Hay hay = new Hay("hay", 10);
     public Grain grain = new Grain("grain", 20);
     public Pellets pellets = new Pellets("pellets", 30);
-
 
 
     public Player(String name) {
@@ -20,23 +19,39 @@ public class Player {
     }
 
     public void showMyDetails() {
+
+
         System.out.println("You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.");
         if (animals.isEmpty()) {
             System.out.println("You don't own any animals...");
-        } else {
+
+        }
+
+        if (animals.isEmpty() && money == 0) {
+
+            System.out.println("and you have no money. I hope you're not a sore loser. " + this.name + " IS OUT!");
+
+            Game.losers.add(this);
+            Dialogs.sleep(7000);
+            // Game.players.remove(this);
+
+            //Game.actionCounter++;
+        }
+         else {
             for (var animal : animals) {
-                System.out.println("*"+animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName().toLowerCase() + "'s health is at: " +
-                         + animal.health + "%");
+                System.out.println("*" + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName().toLowerCase() + "'s health is at: " +
+                        +animal.health + "%");
             }
         }
     }
+
 
 
     public void feedAnimal() {
 
         if (animals.isEmpty()) {
             System.out.println("You don't have any animals to feed!");
-            Dialogs.sleep(1000); //fedanimal +1
+            Dialogs.sleep(1000);
             return;
 
         }
@@ -104,7 +119,7 @@ public class Player {
         for (var animal : this.animals) {
             animal.health -= percent;      // animal.health = animal.health - percent;
             if (animal.health <= 0) {
-                System.out.println(animal.name + " has passed away due to negligence.");
+                System.out.println(animal.name + " has passed away due to negligence. Shame!");
                 deadAnimals.add(animal);
             }
         }
@@ -116,7 +131,7 @@ public class Player {
 
         Scanner input = new Scanner(System.in);
         int list = 0;
-        System.out.println("You own the below animals: ");
+        System.out.println("You own the below animals: \n");
         for (var animal : animals) {
             list++;
             System.out.println(list + ". " + animal.name + " the " + animal.getClass().getSimpleName() + ". " + animal.gender + ".");   //prints list of animals with a number in front.
@@ -127,22 +142,53 @@ public class Player {
 
         ArrayList<Animal> soldAnimals = new ArrayList<>();
 
+        if (animals.size() == 0) {
+            System.out.println("\n You don't have any animals to sell, maybe try buying one first...");
+            return;
+        }
+
         listOfAnimalsOwned();
         int number = Dialogs.promptInt("\nWhich animal would you like to sell? Enter a number", 1, animals.size());
 
-        String animalType = this.animals.get(number - 1).getClass().getSimpleName().toLowerCase();
-        Animal animalToSell = this.animals.get(number - 1);   //-1 gets index of selected animal
+        String animalType = animals.get(number - 1).getClass().getSimpleName().toLowerCase();
+        Animal animalToSell = animals.get(number - 1);   //-1 gets index of selected animal
 
         double animalHealth = ((double) animalToSell.health / 100);
-        money += animalToSell.price * animalHealth;     //MAKE MATH ROUND TO A AVRUNDA ISTÄLLET FÖR KAPA AV
-        System.out.println(animalToSell.price + "SELL PRICE");
 
-        System.out.print(money);
+        double salePrice = animalToSell.price * animalHealth;
+        int newPrice = (int) Math.round(salePrice);
+
+        money += newPrice;
+        System.out.println("You've just made " + newPrice + " pieces of silver!");
+
         soldAnimals.add(animalToSell);
 
         animals.removeAll(soldAnimals);
         Game.actionCounter++;
+
+        int choice = Dialogs.promptInt("\nYou have " + money + " pieces of silver left. " +
+                "Would you like to sell another animal? 1 for yes 2 for no ", 1, 2);
+        if (choice == 1) {
+            sellAnimal();
+        }
     }
+
+//    public void lastRound() {
+//
+//        int winningPot = 0;
+//
+//                for (var animal : animals) {
+//                    double animalHealth = ((double) animal.health / 100);
+//                    double salePrice = animal.price * animalHealth;
+//                    int newPrice = (int) Math.round(salePrice);
+//                    money += animalHealth;
+//                    System.out.println(newPrice);
+//                }
+//        Game.players.sort((Player a, Player b) -> { return a.money > b.money ? -1 : 1; });
+//
+//        System.out.println("The winner is " + );
+//            }
+//        }
+
+
 }
-
-

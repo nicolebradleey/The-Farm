@@ -25,7 +25,7 @@ public abstract class Food {
                 System.out.println("You can't afford this many kilos\n");
                 Dialogs.sleep(1000);
                 afford = false;
-                continue;
+                break;
             }
             if (className.equals("hay")) {
                 System.out.println("That's a total of " + finalPrice + " silver pieces");
@@ -52,11 +52,15 @@ public abstract class Food {
 
             }
         }while(!afford );
+
+         int choice = Dialogs.promptInt("You have " + player.money
+                 + " pieces of silver left. Would you like to buy more food? Enter 1 for yes or 2 for no.",1,2);
+         if (choice == 1){
+             Store.buyFood(player);
+         }
+
      }
 
     }
-
-
-
 
 

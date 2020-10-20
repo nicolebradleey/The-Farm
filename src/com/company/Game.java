@@ -6,10 +6,10 @@ public class Game {
     Scanner input = new Scanner(System.in);
     public int rounds;    // 5-30
     public int currentRound = 1;
-    public ArrayList<Player> players = new ArrayList<>();
+    static public ArrayList<Player> players = new ArrayList<>();
+    static public ArrayList<Player> losers = new ArrayList<>();
     static public int actionCounter = 0;
     public Animal animal;
-
 
 
     public Game() {
@@ -34,14 +34,24 @@ public class Game {
 
             // Loop through each player
             for (var player : players) {
+//                if (currentRound == rounds) {
+//                    player.lastRound();
+//                }
+
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.money + " pieces of silver.");
                 player.healthDeterioration();
+
                 player.showMyDetails();
 
-                System.out.println("\nRound " + currentRound + " of " + rounds + "\nWhat would you like to do, " + player.name + "?");
-                Dialogs.sleep(500);
+                if (Game.losers.contains(player)) {
+                    // The player has lost so he/shes can not take part in the round
+                    continue;
+                }
 
-                //create loop with boolean preferably counter or something that makes sure an action has been made do while - fedanimal = 0.
+
+                System.out.println("\nRound " + currentRound + " of " + rounds + ". \n -------------------------" +
+                        "\nWhat would you like to do, " + player.name + "?");
+                Dialogs.sleep(500);
 
 
                 actionCounter = 0;
@@ -54,12 +64,16 @@ public class Game {
                         case 3 -> player.feedAnimal();
                         case 4 -> Animal.mateAnimals(player);
                         case 5 -> player.sellAnimal();
-                        default -> System.out.println("Are you sure you want to exit?");   //figure out how to use this with with both number and letters
+                        // default -> System.out.println("Game ending...");
+
 
                     }
                 }
             }
+
+
             currentRound++; // increase currentRound counter
+
         }
     }
 
@@ -80,14 +94,5 @@ public class Game {
     }
 
 
-    }
+}
 
-
-
-//a) Köpa max så många djur som hen har pengar till (varje typ av djur har ett fast ursprungspris, oavsett kön)
-//b) Köpa max så mycket mat som hen har pengar till (mat köps i kg och har kilopris)
-//c) Mata sina djur (vilken slags mat måste anges för varje djur man vill mata)
-//d) Försöka få ett par djur att para sig, då skapas i 50% av fallen nya djur man äger
-// (om djuren är av samma slag och olika kön, olka slags djur kan inte para sig). Om parningen lyckas kan spelaren döpa det/de nya djuret/djuren
-// (olika slags djur kan ha olika många ungar/parning). Könet på djuren som skapas vid parning slumpas (50% hona, 50% hane).
-//e) Sälja ett-flera djur (priset är ursprungspriset gånger hälsovärdet)

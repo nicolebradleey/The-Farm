@@ -12,21 +12,24 @@ public class Store {
 
     public static void buyFood(Player player) {
         int choice;
-        choice = Dialogs.promptInt("Which kind of food will you be purchasing today? \n1.Hay á 10 pieces of silver per kilo" +
-                " \n2.Grain á 20 pieces of silver per kilo \n3.Pellets á 30 pieces of silver per kilo.", 1, 3);
+        choice = Dialogs.promptInt("\nWhich kind of food will you be purchasing today? \n                          " +
+                "\n1.HAY á 10 pieces of silver per kilo" +
+                " \n2.GRAIN á 20 pieces of silver per kilo \n3.PELLETS á 30 pieces of silver per kilo. \nEnter 4 to EXIT.", 1, 4);   //BUY AS MUCH FOOD AS POSSIBLE TO BE FIXED
 
         switch (choice) {
             case 1 -> Hay.createFood(player,10,"hay");
             case 2 -> Grain.createFood(player,20,"grain");
             case 3 ->Pellets.createFood(player,30,"pellets");
+            default -> Game.actionCounter++;
         }
     }
 
     public static void buyAnimal(Player player) {
         int choice;
-        choice = Dialogs.promptInt("Which animal would you like to purchase today? \n1.Cow á 300 pieces of silver." +
-                " \n2.Pig á 250 pieces of silver.  \n3.Goose á 150 pieces of silver" + " " +
-                "\n4.Goat á 200 pieces of silver. \n5.Donkey á 100 pieces of silver", 1, 5);
+        choice = Dialogs.promptInt("\nWhich animal would you like to purchase today? \n                      " +
+                "\n1.COW á 300 pieces of silver." +
+                " \n2.PIG á 250 pieces of silver.  \n3.GOOSE á 150 pieces of silver" + " " +
+                "\n4.GOAT á 200 pieces of silver. \n5.DONKEY á 100 pieces of silver. \nEnter 6 to EXIT.", 1, 6);
 
         switch (choice) {
             case 1 -> Cow.createAnimal(player, 300, "Cow");
@@ -34,6 +37,8 @@ public class Store {
             case 3 -> Goose.createAnimal(player, 150, "Goose" );
             case 4 -> Goat.createAnimal(player, 200, "Goat");
             case 5 -> Donkey.createAnimal(player, 100,  "Donkey");
+            default -> Game.actionCounter++;     //if they choose to buy more animals yet have no money, how to break loop?? //FIX SO THAT WHEN AS MANY ANIMALS
+                                                                          // YOU CAN AFFORD HAVE BEEN BOUGHT YOU CAN GO BACK TO MENY
         }
 
     }
