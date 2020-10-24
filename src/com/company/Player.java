@@ -6,7 +6,7 @@ public class Player {
 
     public int money = 200; //SÄTT TILL 2000
     public String name;
-    public ArrayList<Animal> animals;
+    static public ArrayList<Animal> animals;
     public Hay hay = new Hay("hay", 10);
     public Grain grain = new Grain("grain", 20);
     public Pellets pellets = new Pellets("pellets", 30);
@@ -18,33 +18,32 @@ public class Player {
 
     }
 
-    public void showMyDetails() {
+    public String showMyDetails() {
 
+        String details = "";
+        details += "You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.";
 
-        System.out.println("You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.");
         if (animals.isEmpty()) {
-            System.out.println("You don't own any animals...");
-
+            details += "\nYou don't own any animals...";
         }
 
         if (animals.isEmpty() && money == 0) {
 
-            System.out.println("and you have no money. I hope you're not a sore loser. " + this.name + " IS OUT!");
-
+            details += "and you have no money. I hope you're not a sore loser. " + this.name + " IS OUT!";
             Game.losers.add(this);
             Dialogs.sleep(7000);
-            // Game.players.remove(this);
-
-            //Game.actionCounter++;
-        }
-         else {
+            if (Game.losers.size() == Game.playerCounter) {
+                details += "GAME OVER";
+                System.exit(0);
+            }
+        } else {
             for (var animal : animals) {
-                System.out.println("*" + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName().toLowerCase() + "'s health is at: " +
-                        +animal.health + "%");
+                details += "*" + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName().toLowerCase() + "'s health is at: " +
+                        +animal.health + "%";
             }
         }
+        return details;
     }
-
 
 
     public void feedAnimal() {
@@ -113,10 +112,10 @@ public class Player {
 
     public void healthDeterioration() {
         Random random = new Random();
-        int percent = random.nextInt(30) + 10;
         ArrayList<Animal> deadAnimals = new ArrayList<>();
 
-        for (var animal : this.animals) {
+        for (var animal : animals) {
+            int percent = random.nextInt(30) + 10;
             animal.health -= percent;      // animal.health = animal.health - percent;
             if (animal.health <= 0) {
                 System.out.println(animal.name + " has passed away due to negligence. Shame!");
@@ -173,22 +172,8 @@ public class Player {
         }
     }
 
-//    public void lastRound() {
-//
-//        int winningPot = 0;
-//
-//                for (var animal : animals) {
-//                    double animalHealth = ((double) animal.health / 100);
-//                    double salePrice = animal.price * animalHealth;
-//                    int newPrice = (int) Math.round(salePrice);
-//                    money += animalHealth;
-//                    System.out.println(newPrice);
-//                }
-//        Game.players.sort((Player a, Player b) -> { return a.money > b.money ? -1 : 1; });
-//
-//        System.out.println("The winner is " + );
-//            }
-//        }
-
 
 }
+
+
+

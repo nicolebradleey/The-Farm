@@ -14,7 +14,7 @@ public class Store {
         int choice;
         choice = Dialogs.promptInt("\nWhich kind of food will you be purchasing today? \n                          " +
                 "\n1.HAY á 10 pieces of silver per kilo" +
-                " \n2.GRAIN á 20 pieces of silver per kilo \n3.PELLETS á 30 pieces of silver per kilo. \nEnter 4 to EXIT.", 1, 4);   //BUY AS MUCH FOOD AS POSSIBLE TO BE FIXED
+                " \n2.GRAIN á 20 pieces of silver per kilo \n3.PELLETS á 30 pieces of silver per kilo. \nEnter 4 to EXIT.", 1, 4);
 
         switch (choice) {
             case 1 -> Hay.createFood(player,10,"hay");
@@ -37,8 +37,7 @@ public class Store {
             case 3 -> Goose.createAnimal(player, 150, "Goose" );
             case 4 -> Goat.createAnimal(player, 200, "Goat");
             case 5 -> Donkey.createAnimal(player, 100,  "Donkey");
-            default -> Game.actionCounter++;     //if they choose to buy more animals yet have no money, how to break loop?? //FIX SO THAT WHEN AS MANY ANIMALS
-                                                                          // YOU CAN AFFORD HAVE BEEN BOUGHT YOU CAN GO BACK TO MENY
+            default -> Game.actionCounter++;
         }
 
     }

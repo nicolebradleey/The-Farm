@@ -10,6 +10,7 @@ public class Game {
     static public ArrayList<Player> losers = new ArrayList<>();
     static public int actionCounter = 0;
     public Animal animal;
+    static public int playerCounter = 0;
 
 
     public Game() {
@@ -21,6 +22,7 @@ public class Game {
         for (int i = 0; i < amountOfPlayers; i++) {
             String playerName = input.next();
             newPlayer(playerName);
+            playerCounter++;
         }
 
         chooseRounds();
@@ -34,14 +36,15 @@ public class Game {
 
             // Loop through each player
             for (var player : players) {
-//                if (currentRound == rounds) {
-//                    player.lastRound();
-//                }
+
+                if (Game.losers.contains(player)) {
+                    continue;
+                }
 
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.money + " pieces of silver.");
                 player.healthDeterioration();
 
-                player.showMyDetails();
+                System.out.println(player.showMyDetails());
 
                 if (Game.losers.contains(player)) {
                     // The player has lost so he/shes can not take part in the round
@@ -56,7 +59,7 @@ public class Game {
 
                 actionCounter = 0;
                 while (actionCounter == 0) {
-                    choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal ", 1, 5);
+                    choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal \n6.EXIT.",1,6);
 
                     switch (choice) {
                         case 1 -> Store.buyAnimal(player);
@@ -64,17 +67,47 @@ public class Game {
                         case 3 -> player.feedAnimal();
                         case 4 -> Animal.mateAnimals(player);
                         case 5 -> player.sellAnimal();
-                        // default -> System.out.println("Game ending...");
+                        default -> System.exit(0);
 
 
                     }
                 }
             }
 
-
             currentRound++; // increase currentRound counter
 
         }
+            lastRound();
+
+
+
+    }
+
+    public void lastRound() {
+
+
+        for(var player: players) {
+            for (var animal : player.animals) {
+                double animalHealth = ((double) animal.health / 100);
+                double salePrice = animal.price * animalHealth;
+                int newPrice = (int) Math.round(salePrice);
+                player.money += newPrice;
+
+            }
+        }
+
+        players.sort((Player a, Player b) -> a.money > b.money ? -1 : 1);
+
+
+        for(var player: players){
+            System.out.println(player.name + " has " + player.money + " pieces of silver.");    //DRAW MORE THAN ONE WINNER POSSIBLE. even if all 4 have the same
+
+        }
+        if (players.get(0).money == players.get(1).money){
+            System.out.println("It looks like we have a draw between " + players.get(0).name + " and " + players.get(1).name + "!!!");
+        }
+
+        else{System.out.println(players.get(0).name + " has the most money and is therefore the WINNER!!!");}
     }
 
     public void newPlayer(String newPlayer) {
@@ -84,7 +117,7 @@ public class Game {
 
     public void chooseRounds() {
 
-        rounds = Dialogs.promptInt("How many rounds will be played today? Please choose between 5-30", 5, 30);
+        rounds = Dialogs.promptInt("How many rounds will be played today? Please choose between 5-30", 2, 30);
         for (int i = 0; i < rounds; i++) {
             System.out.println("\n".repeat(20));
             menu();

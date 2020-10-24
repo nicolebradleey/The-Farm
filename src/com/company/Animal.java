@@ -89,34 +89,34 @@ public abstract class Animal {    //change to abstract?
             return;
         }
 
+        Random random = new Random();
+        int randomNumberOfBabies = random.nextInt(3)+1;
+        int counter = 0;
 
-        if(animalType1.equals("cow")){
 
+        while(counter <= randomNumberOfBabies){
+
+            counter++;
+
+            String gender1 = Math.random() > 0.5 ? "male" : "female";
+
+
+            String name = Dialogs.prompt("It's a " + player.animals.get(player.animals.size() - 1).gender +
+                    " " + player.animals.get(player.animals.size() - 1).getClass().getSimpleName() + "!!!" +
+                    "\nPlease enter a name for your baby " + animalType1 + ": ");
+
+
+            switch (animalType1) {
+                case "pig" -> player.animals.add(new Pig(name, gender1));
+                case "cow" -> player.animals.add(new Cow(name, gender1));
+                case "goat" -> player.animals.add(new Goat(name, gender1));
+                case "goose" -> player.animals.add(new Goose(name, gender1));
+                case "donkey" -> player.animals.add(new Donkey(name, gender1));
+            }
+
+            Game.actionCounter++;
 
         }
-
-
-
-        String gender1 = Math.random() > 0.5 ? "male" : "female"; //OLIKA DJUR KAN HA OLIKA MÅNGA BARN!!
-
-
-        String name = Dialogs.prompt("It's a " + player.animals.get(player.animals.size()-1).gender  +
-                 " " + player.animals.get(player.animals.size()-1).getClass().getSimpleName() + "!!!" +
-                "\nPlease enter a name for your baby " + animalType1 + ": ");
-
-                                                                                                                  //OLIKA DJUR KAN HA OLIKA MÅNGA BARN!!
-
-        switch (animalType1) {
-            case "pig" -> player.animals.add(new Pig(name, gender1));
-            case "cow" -> player.animals.add(new Cow(name, gender1));
-            case "goat" -> player.animals.add(new Goat(name, gender1));
-            case "goose" -> player.animals.add(new Goose(name, gender1));
-            case "donkey" -> player.animals.add(new Donkey(name, gender1));
-        }
-
-        Game.actionCounter ++;
-
-
     }
 
 
