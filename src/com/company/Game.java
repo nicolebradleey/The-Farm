@@ -15,14 +15,14 @@ public class Game {
 
     public Game() {
 
-        System.out.println("Welcome to THE FARM! \n ------------------------------" +
-                " \nPlease enter how many will be playing today (1-4 players).");
-        var amountOfPlayers = input.nextInt();
+        int amountOfPlayers = Dialogs.promptInt("Welcome to THE FARM! \n ------------------------------" +
+                " \nPlease enter how many will be playing today (1-4 players).", 1, 4);
+
 
         System.out.println("Please enter your names: ");
         for (int i = 0; i < amountOfPlayers; i++) {
             String playerName = input.next();
-            String nameCapitalized = playerName.substring(0,1).toUpperCase();
+            String nameCapitalized = playerName.substring(0, 1).toUpperCase();
             String name = nameCapitalized + playerName.substring(1);
             newPlayer(name);
             playerCounter++;
@@ -46,7 +46,7 @@ public class Game {
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.money + " pieces of silver.");
                 player.healthDeterioration();
 
-                System.out.println( player.showMyDetails());
+                System.out.println(player.showMyDetails());
 
                 if (Game.losers.contains(player)) {
                     // The player has lost so he/she can not take part in the round
@@ -61,7 +61,7 @@ public class Game {
 
                 actionCounter = 0;
                 while (actionCounter == 0) {
-                    choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal \n6.EXIT.",1,6);
+                    choice = Dialogs.promptInt("\n1.Purchase an animal. \n2.Purchase food. \n3.Feed an animal. \n4.Mating season. \n5.Sell an animal \n6.EXIT.", 1, 6);
 
                     switch (choice) {
                         case 1 -> Store.buyAnimal(player);
@@ -79,13 +79,13 @@ public class Game {
             currentRound++; // increase currentRound counter
 
         }
-            lastRound();
+        lastRound();
     }
 
     public void lastRound() {
 
 
-        for(var player: players) {
+        for (var player : players) {
             for (var animal : player.animals) {
                 double animalHealth = ((double) animal.health / 100);
                 double salePrice = animal.price * animalHealth;
@@ -98,20 +98,20 @@ public class Game {
         players.sort((Player a, Player b) -> a.money > b.money ? -1 : 1);
 
 
-        for(var player: players){
+        for (var player : players) {
             System.out.println(player.name + " has " + player.money + " pieces of silver.");
         }
 
-        ArrayList <Player> winners = new ArrayList<>();
+        ArrayList<Player> winners = new ArrayList<>();
 
-        for(var player1: players){
-            if(player1.money == players.get(0).money){
+        for (var player1 : players) {
+            if (player1.money == players.get(0).money) {
                 winners.add(player1);
             }
         }
         String winningNames = "";
 
-        for(var winner: winners){
+        for (var winner : winners) {
             winningNames += winner.name + ", ";
         }
 
@@ -129,7 +129,7 @@ public class Game {
 
     public void chooseRounds() {
 
-        rounds = Dialogs.promptInt("How many rounds will be played today? Please choose between 5-30", 2, 30);
+        rounds = Dialogs.promptInt("How many rounds will be played today? Please choose between 5-30", 5, 30);
         for (int i = 0; i < rounds; i++) {
             System.out.println("\n".repeat(20));
             menu();

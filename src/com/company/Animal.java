@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.*;
 
-public abstract class Animal {    //change to abstract?
+public abstract class Animal {
 
     public String name;
     public String gender;
@@ -27,7 +27,7 @@ public abstract class Animal {    //change to abstract?
             String name1 = nameCapitalized + name.substring(1);
 
             int genderChoice  = Dialogs.promptInt("Is " + name1 + " a MALE (press 1) or" +
-                    " a FEMALE (press 2) " + className.toLowerCase() + "?",1,2);   //make sure female or male is entered
+                    " a FEMALE (press 2) " + className.toLowerCase() + "?",1,2);
 
             String gender = "";
            if(genderChoice == 1 ){
@@ -65,7 +65,10 @@ public abstract class Animal {    //change to abstract?
             return;
         }
 
-        int number1 = Dialogs.promptInt("\nPick animal one: ", 1, player.animals.size());
+        int number1 = Dialogs.promptInt("\nPick animal one (0 to go back): ", 0, player.animals.size());
+        if(number1 == 0){
+            return;
+        }
 
         String animalType1 = player.animals.get(number1 - 1).getClass().getSimpleName().toLowerCase();  //returns whats on place number1 as a string
        Animal animal1 = player.animals.get(number1 - 1);
@@ -103,7 +106,7 @@ public abstract class Animal {    //change to abstract?
 
         if(Math.random() > 0.5){
             System.out.println("Better luck next time...");
-            Dialogs.sleep(1000);
+            Dialogs.sleep(3000);
             Game.actionCounter ++;
             return;
         }

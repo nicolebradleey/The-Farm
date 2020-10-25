@@ -122,8 +122,9 @@ public class Player {
             int percent = random.nextInt(30) + 10;
             animal.health -= percent;      // animal.health = animal.health - percent;
             if (animal.health <= 0) {
-                System.out.println(animal.name + " has passed away due to negligence. Shame!");
+                System.out.println("\n" + animal.name + " has passed away due to negligence. SHAME!\n");
                 deadAnimals.add(animal);
+                Dialogs.sleep(2000);
             }
         }
         animals.removeAll(deadAnimals);
