@@ -20,7 +20,7 @@ public class Store {
             case 1 -> Hay.createFood(player,10,"hay");
             case 2 -> Grain.createFood(player,20,"grain");
             case 3 ->Pellets.createFood(player,30,"pellets");
-            default -> Game.actionCounter = 0;                                            //can change to buy animals instead of more food and vice versa....
+
         }
     }
 
@@ -38,11 +38,9 @@ public class Store {
             case 3 -> Goose.createAnimal(player, 150, "Goose" );
             case 4 -> Goat.createAnimal(player, 200, "Goat");
             case 5 -> Donkey.createAnimal(player, 100,  "Donkey");
-            default-> Game.actionCounter = 0;
+
         }
 
     }
-
-
 
 }

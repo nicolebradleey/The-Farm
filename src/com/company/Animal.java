@@ -26,13 +26,17 @@ public abstract class Animal {    //change to abstract?
             String nameCapitalized = name.substring(0,1).toUpperCase();
             String name1 = nameCapitalized + name.substring(1);
 
-            String gender  = Dialogs.prompt("Is " + name1 + " a male or a female " + className.toLowerCase() + "?");   //make sure female or male is entered
+            int genderChoice  = Dialogs.promptInt("Is " + name1 + " a MALE (press 1) or" +
+                    " a FEMALE (press 2) " + className.toLowerCase() + "?",1,2);   //make sure female or male is entered
 
-            if (!gender.equals("female") && !gender.equals("male")){
-                System.out.println("Please only enter male or female."); // FIX SO ONLY MALE AND FEMALE CAN BE ENETERED
+            String gender = "";
+           if(genderChoice == 1 ){
+               gender = "male";
+           }
+           if(genderChoice == 2){
+               gender = "female";
+           }
 
-            }
-            else{
             switch (className) {
                 case "Pig" -> player.animals.add(new Pig(name1, gender));
                 case "Cow" -> player.animals.add(new Cow(name1, gender));
@@ -49,12 +53,12 @@ public abstract class Animal {    //change to abstract?
             }
         }
         }
-    }
+
 
     public static void mateAnimals(Player player) { //behöver inte ha gender för finns i fields
 
 
-        player.listOfAnimalsOwned();                 //WHEN YOU DONT HAVE TWO ANIMALS OF SAME TYPE, BREAK!!
+        player.listOfAnimalsOwned();
 
         if(player.animals.size() <= 1){
             System.out.println("\nIn case it wasn't obvious, you need more than one animal to create another...");
@@ -77,12 +81,18 @@ public abstract class Animal {    //change to abstract?
 
 
         if (animal1.gender.equals(animal2.gender)) {
-            System.out.println("You can't mate two animals of the same sex, choose another animal.");
+            int choice = Dialogs.promptInt("You need to choose two animals of the same sex! Or press 2 to exit.",1,2);
+            if(choice == 2){
+                return;
+            }
             wrongAnimal = true;
             continue;
         }
         if(!animalType1.equals(animalType2)) {
-            System.out.println("You need to choose two animals of the same type!");
+            int choice = Dialogs.promptInt("You need to choose two animals of the same type! Or press 2 to exit.",1,2);
+                if(choice == 2){
+                    return;
+                }
             wrongAnimal = true;
             continue;
         }

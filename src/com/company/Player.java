@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Player {
 
-    public int money = 100; //SÄTT TILL 2000
+    public int money = 1500;
     public String name;
     public ArrayList<Animal> animals;
     public Hay hay = new Hay("hay", 10);
@@ -78,6 +78,7 @@ public class Player {
             if (animalToFeed.health >= 100) {
                 animalToFeed.health = 100;
             }
+
         } else if (animalType.equals("pig")) {
             int choice = Dialogs.promptInt("How many kilos of pellets will you be feeding your pig? You currently have "
                     + this.pellets.kilo + " kilos left." + "\n(0 to go back)", 0, this.pellets.kilo);
@@ -107,8 +108,10 @@ public class Player {
             if (animalToFeed.health >= 100) {
                 animalToFeed.health = 100;
             }
-        }
 
+        }
+        System.out.println(animalToFeed.name + "'s health is now " + animalToFeed.health + "%");
+        Dialogs.sleep(3000);;
     }
 
     public void healthDeterioration() {
@@ -167,7 +170,7 @@ public class Player {
         Game.actionCounter++;
 
         int choice = Dialogs.promptInt("\nYou have " + money + " pieces of silver left. " +
-                "Would you like to sell another animal? 1 for yes 2 for no ", 1, 2);
+                "Would you like to sell another animal? 1 for YES 2 for NO.", 1, 2);
         if (choice == 1) {
             sellAnimal();
         }
