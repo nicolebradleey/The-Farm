@@ -28,14 +28,14 @@ public abstract class Food {
                 break;
             }
             if (className.equals("hay")) {
-                System.out.println("That's a total of " + finalPrice + " silver pieces");
+                System.out.println("That's a total of " + finalPrice + " pieces of silver.");
                 player.hay.kilo += choice;
                 Game.actionCounter++;
                 player.money = player.money - finalPrice;
                 break;
             }
             if (className.equals("grain")) {
-                System.out.println("That's a total of " + finalPrice + " silver pieces");
+                System.out.println("That's a total of " + finalPrice + " pieces of silver.");
                 player.grain.kilo += choice;
                 Game.actionCounter++;
                 player.money = player.money - finalPrice;
@@ -43,7 +43,7 @@ public abstract class Food {
 
             }
             if(className.equals("pellets")) {
-                System.out.println("That's a total of " + finalPrice + " silver pieces");
+                System.out.println("That's a total of " + finalPrice + " pieces of silver.");
                 player.pellets.kilo += choice;
                 Game.actionCounter++;
                 player.money = player.money - finalPrice;
@@ -51,10 +51,10 @@ public abstract class Food {
 
 
             }
-        }while(!afford );
+        }while(!afford);
 
          int choice = Dialogs.promptInt("You have " + player.money
-                 + " pieces of silver left. Would you like to buy more food? Enter 1 for yes or 2 for no.",1,2);
+                 + " pieces of silver left." + "\n".repeat(1) + "Would you like to buy more food? Enter 1 for yes or 2 for no.",1,2);
          if (choice == 1){
              Store.buyFood(player);
          }

@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Player {
 
-    public int money = 200; //SÄTT TILL 2000
+    public int money = 100; //SÄTT TILL 2000
     public String name;
-    static public ArrayList<Animal> animals;
+    public ArrayList<Animal> animals;
     public Hay hay = new Hay("hay", 10);
     public Grain grain = new Grain("grain", 20);
     public Pellets pellets = new Pellets("pellets", 30);
@@ -21,7 +21,7 @@ public class Player {
     public String showMyDetails() {
 
         String details = "";
-        details += "You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.";
+        details += "You have " + this.hay.kilo + " kilos of hay, " + grain.kilo + " kilos of grain and " + pellets.kilo + " kilos of pellets.\n";
 
         if (animals.isEmpty()) {
             details += "\nYou don't own any animals...";
@@ -37,9 +37,10 @@ public class Player {
                 System.exit(0);
             }
         } else {
+            int list = 0;
             for (var animal : animals) {
-                details += "*" + animal.name + " the " + animal.gender + " " + animal.getClass().getSimpleName().toLowerCase() + "'s health is at: " +
-                        +animal.health + "%";
+                list++;
+                details += "\n" + list + ". " + animal.name + ": " + animal.getClass().getSimpleName().toUpperCase() + ", " + animal.gender.toUpperCase() + ", " + animal.health + "%";
             }
         }
         return details;
@@ -128,12 +129,12 @@ public class Player {
 
     public void listOfAnimalsOwned() {
 
-        Scanner input = new Scanner(System.in);
         int list = 0;
         System.out.println("You own the below animals: \n");
         for (var animal : animals) {
             list++;
-            System.out.println(list + ". " + animal.name + " the " + animal.getClass().getSimpleName() + ". " + animal.gender + ".");   //prints list of animals with a number in front.
+            System.out.println(list + ". " + animal.name + " the " + animal.getClass().getSimpleName() + ", " + animal.gender+ ".");
+            //prints list of animals with a number in front.
         }
     }
 

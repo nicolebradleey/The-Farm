@@ -15,16 +15,18 @@ public class Game {
 
     public Game() {
 
-        System.out.println("Welcome to The Farm! \n -------------------- \nPlease enter how many will be playing today (1-4 players).");
+        System.out.println("Welcome to THE FARM! \n ------------------------------" +
+                " \nPlease enter how many will be playing today (1-4 players).");
         var amountOfPlayers = input.nextInt();
 
         System.out.println("Please enter your names: ");
         for (int i = 0; i < amountOfPlayers; i++) {
             String playerName = input.next();
-            newPlayer(playerName);
+            String nameCapitalized = playerName.substring(0,1).toUpperCase();
+            String name = nameCapitalized + playerName.substring(1);
+            newPlayer(name);
             playerCounter++;
         }
-
         chooseRounds();
 
     }
@@ -44,15 +46,15 @@ public class Game {
                 System.out.println("\n".repeat(50) + "You have a balance of " + player.money + " pieces of silver.");
                 player.healthDeterioration();
 
-                System.out.println(player.showMyDetails());
+                System.out.println( player.showMyDetails());
 
                 if (Game.losers.contains(player)) {
-                    // The player has lost so he/shes can not take part in the round
+                    // The player has lost so he/she can not take part in the round
                     continue;
                 }
 
 
-                System.out.println("\nRound " + currentRound + " of " + rounds + ". \n -------------------------" +
+                System.out.println("\nRound " + currentRound + " of " + rounds + ". \n ---------------------------" +
                         "\nWhat would you like to do, " + player.name + "?");
                 Dialogs.sleep(500);
 
@@ -78,9 +80,6 @@ public class Game {
 
         }
             lastRound();
-
-
-
     }
 
     public void lastRound() {
@@ -100,15 +99,28 @@ public class Game {
 
 
         for(var player: players){
-            System.out.println(player.name + " has " + player.money + " pieces of silver.");    //DRAW MORE THAN ONE WINNER POSSIBLE. even if all 4 have the same
-
-        }
-        if (players.get(0).money == players.get(1).money){
-            System.out.println("It looks like we have a draw between " + players.get(0).name + " and " + players.get(1).name + "!!!");
+            System.out.println(player.name + " has " + player.money + " pieces of silver.");
         }
 
-        else{System.out.println(players.get(0).name + " has the most money and is therefore the WINNER!!!");}
+        ArrayList <Player> winners = new ArrayList<>();
+
+        for(var player1: players){
+            if(player1.money == players.get(0).money){
+                winners.add(player1);
+            }
+        }
+        String winningNames = "";
+
+        for(var winner: winners){
+            winningNames += winner.name + ", ";
+        }
+
+        winningNames += "is a WINNER!!!";
+        System.out.println(winningNames);
+        System.exit(0);
+
     }
+
 
     public void newPlayer(String newPlayer) {
 
