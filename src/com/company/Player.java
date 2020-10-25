@@ -120,7 +120,7 @@ public class Player {
 
         for (var animal : animals) {
             int percent = random.nextInt(30) + 10;
-            animal.health -= percent;      // animal.health = animal.health - percent;
+            animal.health -= percent;
             if (animal.health <= 0) {
                 System.out.println("\n" + animal.name + " has passed away due to negligence. SHAME!\n");
                 deadAnimals.add(animal);

@@ -55,7 +55,7 @@ public abstract class Animal {
         }
 
 
-    public static void mateAnimals(Player player) { //behöver inte ha gender för finns i fields
+    public static void mateAnimals(Player player) {
 
 
         player.listOfAnimalsOwned();
